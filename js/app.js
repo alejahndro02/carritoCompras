@@ -10,9 +10,17 @@ courses.addEventListener('click', courseBuy);
 //Funciones
 function courseBuy(e){
     e.preventDefault();
-    if(e.target.classList.contains('agregar-carrito')){//solo se ejecutar si al elemento darle click y concide con la clase este correra
-        const course =e.target.parentElement.parentElement;//seleccionamos la seccion de card 
+    if(e.target.classList.contains('agregar-carrito')){
+        const course =e.target.parentElement.parentElement;
     }
-    console.log(course);
-    
+    readDataCourse(course);
+}
+
+function readDataCourse(course){
+    const infoCourse ={
+        imagen: course.querySelector('img').src, 
+        titulo: course.querySelector('h4').innerText,
+        precio: course.querySelector('p span').innerText,
+        id : course.querySelector('a').getAttribute('data-id')
+    }
 }
