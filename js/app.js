@@ -23,4 +23,17 @@ function readDataCourse(course){
         precio: course.querySelector('p span').innerText,
         id : course.querySelector('a').getAttribute('data-id')
     }
+    carInsert(infoCourse);
+    
+}
+
+function carInsert(course){
+    const row = document.createElement('tr'); 
+    row.innerHTML = ` 
+        <td><img src="${course.imagen}" width = 120px> </td>
+        <td>${course.titulo} </td>
+        <td>${course.precio} </td>
+        <td><a href="#" class="borrar-curso" data-id="${course.id}">X</td>
+    `
+    selectionCourse.appendChild(row);
 }
