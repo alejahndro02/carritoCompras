@@ -2,11 +2,13 @@
 const carbuy = document.getElementById('carrito');
 const courses = document.getElementById('lista-cursos');
 const selectionCourse = document.querySelector('#lista-carrito tbody');
+const emptyCarBtn= document.getElementById('vaciar-carrtio');
 //Listeners
 loadEventListener();
 function loadEventListener(){
-courses.addEventListener('click', courseBuy);
-carbuy.addEventListener('click', courseDelete)
+    courses.addEventListener('click', courseBuy);
+    carbuy.addEventListener('click', courseDelete)
+    emptyCarBtn.addEventListener('click', emptyCar)
 //Funciones
 function courseBuy(e){
     e.preventDefault();
@@ -36,6 +38,7 @@ function carInsert(course){
         <td><a href="#" class="borrar-curso" data-id="${course.id}">X</td>
     `
     selectionCourse.appendChild(row);
+    saveCourseLocalStorage(course);
 }
 
 function courseDelete (e){  
@@ -44,5 +47,28 @@ function courseDelete (e){
     if(e.target.classList.contains('borrar-curso')){
         course.remove();
     }
+}
 
+function emptyCar(){
+    while(selectionCourse.firstChild){
+        selectionCourse.removeChild(selectionCourse.firstChild);
+        return false 
+    }
+}
+
+
+function saveCourseLocalStorage(course){
+    let courseSave = courseGetLocalStorage();    
+    courseSave.push(course);
+    localStorage.setItem('cursos', JSON.stringify(courseSave));
+}
+function courseGetLocalStorage(){
+    let courseLS =[];
+    let item = localStorage.getItem('cursos');
+    if(item == null){
+        courseLS;
+    }else{
+        courseLS = JSON.parse(item); 
+    }
+    return courseLS;
 }
