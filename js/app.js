@@ -6,7 +6,7 @@ const selectionCourse = document.querySelector('#lista-carrito tbody');
 loadEventListener();
 function loadEventListener(){
 courses.addEventListener('click', courseBuy);
-}
+carbuy.addEventListener('click', courseDelete)
 //Funciones
 function courseBuy(e){
     e.preventDefault();
@@ -36,4 +36,13 @@ function carInsert(course){
         <td><a href="#" class="borrar-curso" data-id="${course.id}">X</td>
     `
     selectionCourse.appendChild(row);
+}
+
+function courseDelete (e){  
+    e.preventDefault();
+    let course = e.target.parentElement.parentElement;
+    if(e.target.classList.contains('borrar-curso')){
+        course.remove();
+    }
+
 }
