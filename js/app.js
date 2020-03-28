@@ -2,18 +2,21 @@
 const carbuy = document.getElementById('carrito');
 const courses = document.getElementById('lista-cursos');
 const selectionCourse = document.querySelector('#lista-carrito tbody');
-const emptyCarBtn= document.getElementById('vaciar-carrtio');
+const emptyCarBtn= document.getElementById('vaciar-carrito');
 //Listeners
 loadEventListener();
 function loadEventListener(){
     courses.addEventListener('click', courseBuy);
-    carbuy.addEventListener('click', courseDelete)
-    emptyCarBtn.addEventListener('click', emptyCar)
+    carbuy.addEventListener('click', courseDelete);
+    emptyCarBtn.addEventListener('click', emptyCar);
+    document.addEventListener('DOMContentLoaded', readLocalStorage);
+}
 //Funciones
 function courseBuy(e){
     e.preventDefault();
+    const course =e.target.parentElement.parentElement;
     if(e.target.classList.contains('agregar-carrito')){
-        const course =e.target.parentElement.parentElement;
+        course;
     }
     readDataCourse(course);
 }
@@ -71,4 +74,18 @@ function courseGetLocalStorage(){
         courseLS = JSON.parse(item); 
     }
     return courseLS;
+}
+
+function readLocalStorage(){
+    let courseLS = courseGetLocalStorage();
+    courseLS.forEach((course)=>{
+        const row = document.createElement('tr'); 
+            row.innerHTML = ` 
+                <td><img src="${course.imagen}" width = 120px> </td>
+                <td>${course.titulo} </td>
+                <td>${course.precio} </td>
+                <td><a href="#" class="borrar-curso" data-id="${course.id}">X</td>
+            `
+            selectionCourse.appendChild(row);
+    })
 }
