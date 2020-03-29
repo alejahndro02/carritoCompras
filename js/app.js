@@ -47,16 +47,21 @@ function carInsert(course){
 function courseDelete (e){  
     e.preventDefault();
     let course = e.target.parentElement.parentElement;
+    let courseId =course.querySelector('a').getAttribute('data-id');
     if(e.target.classList.contains('borrar-curso')){
         course.remove();
     }
+    deleteCourseLocalStorage(courseId);
+
 }
 
 function emptyCar(){
     while(selectionCourse.firstChild){
         selectionCourse.removeChild(selectionCourse.firstChild);
-        return false 
     }
+    emptyCarLocalStorage();
+    return false;
+
 }
 
 
@@ -88,4 +93,18 @@ function readLocalStorage(){
             `
             selectionCourse.appendChild(row);
     })
+}
+
+function deleteCourseLocalStorage(course){
+    let coursesLS = courseGetLocalStorage();
+    coursesLS.forEach((courseLS, index)=>{
+        if(courseLS.id === course){
+            coursesLS.splice(index, 1);
+        }
+    });
+    localStorage.setItem('cursos', JSON.stringify(coursesLS));    
+}
+
+function emptyCarLocalStorage(){
+    localStorage.clear();
 }
